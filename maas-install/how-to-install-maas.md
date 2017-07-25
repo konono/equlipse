@@ -1,4 +1,4 @@
-### MAASのインストール
+## MAASのインストール
 
 ```
 sudo apt-get install software-properties-common
@@ -67,6 +67,8 @@ maas m vlan update fabric-0 untagged dhcp_on=True primary_rack=maas01
 ※Gatewayが設定されていなければ下記で設定
 maas m subnet update 10.0.10.0/23 gateway_ip=10.0.11.254
 ```
+
+## MAAS TIPS
 
 ### MAASのホストネームをmacアドレスから設定
 
