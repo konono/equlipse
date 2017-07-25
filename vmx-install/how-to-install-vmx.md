@@ -281,8 +281,8 @@ root> show chassis network-services
 
 ### 6 Configure interface
 
-![nw_configuration](https://raw.githubusercontent.com/konono/equilipse/images/nw_configuration_v2.PNG 'nw_configuration')
-![vmx_host_interface_configration](https://raw.githubusercontent.com/konono/equilipse/images/vmx_host_interface_configuration_v2.PNG 'vmx_host_interface_configration')
+![nw_configuration](https://raw.githubusercontent.com/konono/equlipse/images/nw_configuration_v1.PNG 'nw_configuration')
+![vmx_host_interface_configration](https://raw.githubusercontent.com/konono/equlipse/images/vmx_host_interface_configuration_v2.PNG 'vmx_host_interface_configration')
 
 ```
 cat vmx-junosdev.conf 
