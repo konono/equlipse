@@ -1,0 +1,4 @@
+---
+# lxc image copy
+- name: Exec mod profile script
+  script: mod_prof.sh

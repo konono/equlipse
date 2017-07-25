@@ -1,0 +1,17 @@
+---
+ #delete lxd container
+- name: Check lxd container
+  shell: juju machines|egrep -o ^[0-9]*/lxd/[0-9]*
+  register: res
+  failed_when: res.rc not in [0, 1]
+
+- debug:
+    msg: "No Container"
+  when: res.rc == 1
+
+- name: Delete lxd container
+  shell: juju machines|egrep -o ^[0-9]*/lxd/[0-9]*|xargs -t -I% juju remove-machine %
+  when:  res.rc == 0
+
+- name: Sleep 30sec
+  shell: sleep 30

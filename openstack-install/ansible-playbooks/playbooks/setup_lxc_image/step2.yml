@@ -1,0 +1,14 @@
+---
+- name: Delete lxd machine
+  hosts: localhost
+  connection: local
+  roles:
+    - delete_lxd_machine
+
+- name: Image provide
+  hosts: "{{ target | default('all') }}"
+  become: yes
+  become_method: sudo
+  roles:
+#    - provide_profile
+    - provide_image

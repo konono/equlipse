@@ -1,0 +1,389 @@
+#
+# Ubuntu: Trusty
+# OpenStack: Liberty
+# Contrail: 3.0.2.0-41
+#
+# This bundle configuration deploys services on 2 virtual/physical machines.
+# Controller (LXC):  1
+# Compute:           1
+#
+# Machine provisioning is done manually for Juju manual or local environment.
+# Each controlling service is deployed in a separate container.
+#
+
+#machines:
+#  "1":
+#    series: trusty 
+#    constraints: tags=yuki-env
+#  "2":
+#    series: trusty
+#    constraints: tags=compute
+
+series: trusty
+
+services:
+  # OpenStack
+  ntp:
+    charm: cs:trusty/ntp
+    options:
+      source: 'time.google.com'
+      auto_peers: true
+
+  mysql:
+    charm: cs:percona-cluster  
+    options:
+      vip: 10.0.10.11
+      vip_cidr: 23
+      vip_iface: eth2
+      dataset-size: 20%
+      source: "deb http://10.0.10.10/ubuntu trusty-updates-mitaka main" 
+      key: "300F9C58"
+      max-connections: 1000
+      root-password: root
+      sst-password: sst-password
+      #temp config
+      min-cluster-size: 1
+      access-network: 10.0.10.0/23
+
+  rabbitmq-server:
+    charm: cs:trusty/rabbitmq-server
+    options:
+      source: "deb http://10.0.10.10/ubuntu trusty-updates-mitaka main" 
+      key: "300F9C58"
+      mirroring-queues: true
+      min-cluster-size: 1
+      management_plugin: true
+      cluster-partition-handling: "pause_minority"
+      vip: 10.0.10.12
+      vip_cidr: 23
+      vip_iface: eth2
+
+  keystone:
+    charm: ./trusty/charm-keystone
+    options:
+      openstack-origin: "deb http://10.0.10.10/ubuntu trusty-updates-mitaka main|300F9C58"
+      admin-role: admin
+      admin-password: admin-password
+      vip: 10.0.10.13
+      vip_cidr: 23
+      # need adjust the env
+      vip_iface: eth2
+      os-public-network: 10.0.10.0/23
+      os-admin-network: 10.0.10.0/23
+      os-internal-network: 10.0.10.0/23
+
+  openstack-dashboard:
+    charm: cs:trusty/openstack-dashboard
+    options:
+      openstack-origin: "deb http://10.0.10.10/ubuntu trusty-updates-mitaka main|300F9C58"
+      vip: 10.0.10.14
+      vip_cidr: 23
+      # need adjust the env
+      vip_iface: eth2
+      endpoint-type: internalURL
+
+  nova-cloud-controller:
+    charm: cs:trusty/nova-cloud-controller
+    options:
+      openstack-origin: "deb http://10.0.10.10/ubuntu trusty-updates-mitaka main|300F9C58"
+      vip: 10.0.10.15
+      vip_cidr: 23
+      # need adjust the env
+      vip_iface: eth2
+      os-public-network: 10.0.10.0/23
+      os-admin-network: 10.0.10.0/23
+      os-internal-network: 10.0.10.0/23
+      network-manager: Neutron
+      disable-aws-compat: true
+      console-access-protocol: novnc
+
+  glance:
+    charm: cs:trusty/glance
+    options:
+      openstack-origin: "deb http://10.0.10.10/ubuntu trusty-updates-mitaka main|300F9C58"
+      vip: 10.0.10.16
+      vip_cidr: 23
+      # need adjust the env
+      vip_iface: eth2
+      os-public-network: 10.0.10.0/23
+      os-admin-network: 10.0.10.0/23
+      os-internal-network: 10.0.10.0/23
+
+  neutron-api:
+    charm: cs:trusty/neutron-api
+    options:
+      openstack-origin: "deb http://10.0.10.10/ubuntu trusty-updates-mitaka main|300F9C58"
+      manage-neutron-plugin-legacy-mode: false
+      neutron-security-groups: true
+      vip: 10.0.10.17
+      vip_cidr: 23
+      # need adjust the env
+      vip_iface: eth2
+      os-public-network: 10.0.10.0/23
+      os-admin-network: 10.0.10.0/23
+      os-internal-network: 10.0.10.0/23
+
+  cinder:
+    #charm: ./trusty/charm-cinder
+    charm: cs:trusty/cinder
+    options: 
+      openstack-origin: "deb http://10.0.10.10/ubuntu trusty-updates-mitaka main|300F9C58"
+      vip: 10.0.10.18
+      vip_cidr: 23
+      # need adjust the env
+      vip_iface: eth2
+      os-public-network: 10.0.10.0/23
+      os-admin-network: 10.0.10.0/23
+      os-internal-network: 10.0.10.0/23
+      #os-public-hostname: r2-volume.rdcloud.bi-rd.jp
+      #block-device: None
+      glance-api-version: 2
+      #config-flags: 'nova_catalog_info=compute:nova:internalURL'
+
+  cinder-ceph:
+    series: trusty
+    charm: ./trusty/charm-cinder-ceph-git-mitaka
+    
+  nova-compute:
+    charm: cs:trusty/nova-compute
+    options:
+      openstack-origin: "deb http://10.0.10.10/ubuntu trusty-updates-mitaka main|300F9C58"
+      os-internal-network: 10.0.10.0/23
+      enable-live-migration: true
+      enable-resize: true
+
+#cluster deployment
+  mysql-hacluster:
+    charm: cs:trusty/hacluster
+    options:
+      cluster_count: 3
+      corosync_bindiface: eth3
+      #corosync_mcastaddr: 226.94.1.1
+  keystone-hacluster:
+    charm: cs:trusty/hacluster
+    options:
+      cluster_count: 3
+      #corosync_mcastaddr: 226.94.1.2
+      corosync_bindiface: eth3
+  glance-hacluster:
+    charm: cs:trusty/hacluster
+    options:
+      cluster_count: 3
+      #corosync_mcastaddr: 226.94.1.3
+      corosync_bindiface: eth3
+  openstack-dashboard-hacluster:
+    charm: cs:trusty/hacluster
+    options:
+      cluster_count: 3
+      #corosync_mcastaddr: 226.94.1.4
+      corosync_bindiface: eth3
+  nova-controller-hacluster:
+    charm: cs:trusty/hacluster
+    options:
+      cluster_count: 3
+      #corosync_mcastaddr: 226.94.1.5
+      corosync_bindiface: eth3
+  neutron-hacluster:
+    charm: cs:trusty/hacluster
+    options:
+      cluster_count: 3
+      #corosync_mcastaddr: 226.94.1.6
+      corosync_bindiface: eth3
+  cinder-hacluster:
+    charm: cs:trusty/hacluster
+    options:
+      cluster_count: 3
+      #corosync_mcastaddr: 226.94.1.7
+      corosync_bindiface: eth3
+
+  ceph:
+    charm: cs:trusty/ceph
+    options:
+      source: "deb http://10.0.10.10/ubuntu trusty-updates-mitaka main" 
+      key: "300F9C58"
+      fsid: 4e8b237a-e754-11e6-8ce0-00163efc80d3 
+      monitor-secret: AQAz6I9Y3tWkBRAAKANsnHQyzyADCI7TO91uYw== 
+      osd-devices: /dev/sdb /dev/sdc
+      osd-journal-size: 10240
+      ceph-cluster-network: 10.0.120.0/24
+      ceph-public-network: 10.0.120.0/24
+
+  ceph-osd:
+    charm: cs:trusty/ceph-osd
+    options:
+      source: "deb http://10.0.10.10/ubuntu trusty-updates-mitaka main"
+      key: "300F9C58"
+      osd-devices: /dev/sdb /dev/sdc 
+      #osd-journal: /dev/fioa
+      osd-journal-size: 10240
+      osd-reformat: 'yes'
+      ceph-cluster-network: 10.0.120.0/24
+      ceph-public-network: 10.0.120.0/24
+
+  # Contrail
+  cassandra:
+    charm: cs:trusty/cassandra
+    options:
+      authenticator: AllowAllAuthenticator
+      install_sources: | 
+          - "deb http://10.0.10.10/contrail trusty main"
+          - "ppa:cassandra-charmers/stable"
+          - "ppa:openjdk-r/ppa"
+      install_keys: |
+          - "300F9C58"
+          - ""
+          - "86F44E2A"
+      # need adjust the env
+      listen_interface: eth2
+      rpc_interface: eth2
+
+  zookeeper:
+    charm: cs:~charmers/trusty/zookeeper-1
+
+  kafka:
+    charm: cs:~sdn-charmers/trusty/apache-kafka
+
+  haproxy:
+    charm: cs:trusty/haproxy
+    options:
+      default_options: dontlognull
+      peering_mode: active-active
+
+  keepalived:
+    charm: cs:~sdn-charmers/trusty/keepalived 
+    options:
+      router-id: 1
+      # this ip must be same to contrail-configuration and analytics vip
+      virtual-ip: 10.0.10.19
+
+  contrail-configuration:
+    charm: cs:~sdn-charmers/trusty/contrail-configuration
+    options:
+      cassandra-units: 1
+      install-sources:
+        "deb http://10.0.10.10/contrail trusty main"
+      install-keys:
+        "300F9C58"
+      control-network: "10.0.110.0/24" 
+      vip: 10.0.10.20
+
+  contrail-control:
+    charm: cs:~sdn-charmers/trusty/contrail-control
+    options:
+      install-sources:
+        "deb http://10.0.10.10/contrail trusty main"
+      install-keys:
+        "300F9C58"
+      control-network: "10.0.110.0/24" 
+
+  contrail-analytics:
+    charm: cs:~sdn-charmers/trusty/contrail-analytics
+    kafka-units: 1
+    options:
+      install-sources:
+        "deb http://10.0.10.10/contrail trusty main"
+      install-keys:
+        "300F9C58"
+      control-network: "10.0.110.0/24"
+      vip: 10.0.10.21
+
+  contrail-webui:
+    charm: cs:~sdn-charmers/trusty/contrail-webui
+    options:
+      install-sources:
+        "deb http://10.0.10.10/contrail trusty main"
+      install-keys:
+        "300F9C58"
+
+  neutron-contrail-plugin:
+    charm: cs:~sdn-charmers/trusty/neutron-api-contrail 
+    options:
+      install-sources:
+        "deb http://10.0.10.10/contrail trusty main"
+      install-keys:
+        "300F9C58"
+
+  neutron-contrail:
+    charm: cs:~sdn-charmers/trusty/neutron-contrail
+    options:
+      install-sources:
+        "deb http://10.0.10.10/contrail trusty main"
+      install-keys:
+        "300F9C58"
+      control-interface: "vhost0"
+      vhost-interface: "bond0.110"
+
+relations:
+  # OpenStack
+  - [ ntp, nova-compute ]
+  - [ ntp, ceph ]
+  - [ ntp, ceph-osd ]
+  - [ keystone, mysql ]
+  - [ glance, mysql ]
+  - [ glance, keystone ]
+  - [ glance, ceph]
+  - [ openstack-dashboard, keystone ]
+  - [ nova-cloud-controller, mysql ]
+  - [ nova-cloud-controller, rabbitmq-server ]
+  - [ nova-cloud-controller, keystone ]
+  - [ nova-cloud-controller, glance ]
+  - [ neutron-api, mysql ]
+  - [ neutron-api, rabbitmq-server ]
+  - [ neutron-api, nova-cloud-controller ]
+  - [ neutron-api, keystone ]
+  - [ "cinder:image-service", "glance:image-service" ] 
+  - [ "glance:cinder-volume-service", "cinder:cinder-volume-service" ]
+  - [ cinder, mysql ]
+  - [ cinder, rabbitmq-server ]
+  - [ cinder, nova-cloud-controller ]
+  - [ cinder, keystone ]
+  - [ cinder, cinder-ceph ]
+  - [ cinder-ceph, ceph ]
+  - [ "nova-compute:shared-db", "mysql:shared-db" ]
+  - [ "nova-compute:amqp", "rabbitmq-server:amqp" ]
+  - [ nova-compute, glance ]
+  - [ nova-compute, nova-cloud-controller ]
+  - [ nova-compute, ceph ]
+  - [ ceph, ceph-osd ]
+  - [ mysql, mysql-hacluster ]
+  - [ keystone, keystone-hacluster ]
+  - [ glance, glance-hacluster ]
+  - [ nova-cloud-controller, nova-controller-hacluster ]
+  - [ neutron-api, neutron-hacluster ]
+  - [ openstack-dashboard, openstack-dashboard-hacluster ]
+  - [ cinder, cinder-hacluster ]
+
+  # Contrail
+  - [ kafka, zookeeper ]
+  - [ "contrail-configuration:cassandra", "cassandra:database" ]
+  - [ "contrail-configuration:contrail-analytics-api", "contrail-analytics:contrail-analytics-api" ]
+  - [ contrail-configuration, zookeeper ]
+  - [ contrail-configuration, rabbitmq-server ]
+  - [ contrail-configuration, haproxy ]
+  - [ "contrail-configuration:identity-admin", "keystone:identity-admin" ]
+  - [ "contrail-configuration:identity-service", "keystone:identity-service" ]
+  - [ "contrail-analytics:identity-admin", "keystone:identity-admin" ]
+  - [ "contrail-analytics:identity-service", "keystone:identity-service" ]
+  - [ "contrail-analytics:cassandra", "cassandra:database" ]
+  - [ "contrail-analytics:contrail-api", "contrail-configuration:contrail-api" ]
+  - [ "contrail-analytics:contrail-discovery", "contrail-configuration:contrail-discovery" ]
+  - [ contrail-analytics, kafka ]
+  - [ contrail-analytics, zookeeper ]
+  - [ contrail-analytics , haproxy ]
+  - [ "contrail-control:contrail-discovery", "contrail-configuration:contrail-discovery" ]
+  - [ "contrail-control:contrail-ifmap", "contrail-configuration:contrail-ifmap" ]
+  - [ "contrail-control:contrail-api", "contrail-configuration:contrail-api" ]
+  - [ contrail-control, keystone ]
+  - [ neutron-api, neutron-contrail-plugin ]
+  - [ neutron-contrail-plugin, contrail-configuration ]
+  - [ neutron-contrail-plugin, keystone ]
+  - [ "contrail-webui:contrail_api", "contrail-configuration:contrail-api" ]
+  - [ "contrail-webui:contrail_discovery", "contrail-configuration:contrail-discovery" ]
+  - [ "contrail-webui:cassandra", "cassandra:database" ]
+  - [ contrail-webui, keystone ]
+  - [ contrail-webui, haproxy ]
+  - [ neutron-contrail, nova-compute ]
+  - [ neutron-contrail, keystone ]
+  - [ "neutron-contrail:contrail-discovery", "contrail-configuration:contrail-discovery" ]
+  - [ "neutron-contrail:contrail-api", "contrail-configuration:contrail-api" ]
+  - [ haproxy, keepalived ]

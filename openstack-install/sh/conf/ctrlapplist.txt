@@ -1,0 +1,14 @@
+cassandra
+contrail-analytics
+contrail-configuration
+contrail-control
+contrail-webui
+glance
+kafka
+keystone
+mysql
+neutron-api
+nova-cloud-controller
+openstack-dashboard
+rabbitmq-server
+zookeeper

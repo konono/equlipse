@@ -1,0 +1,4 @@
+---
+  #copy lxd-bridge config
+- name: Copy lxd-bridge config
+  template: src=lxd-bridge.j2 dest=/etc/default/lxd-bridge

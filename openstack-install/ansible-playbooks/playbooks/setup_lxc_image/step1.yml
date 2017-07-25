@@ -1,0 +1,8 @@
+---
+- name: Image provide
+  vars:
+    - bridge: enp3s0f0
+  hosts: "{{ target | default('all') }}"
+  become: yes
+  roles:
+    - juju_berefore_config

@@ -1,0 +1,4 @@
+rabbitmq-server
+kafka
+openstack-dashboard
+contrail-webui

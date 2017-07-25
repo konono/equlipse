@@ -1,0 +1,8 @@
+cassandra
+contrail-analytics
+contrail-configuration
+contrail-control
+contrail-webui
+kafka
+zookeeper
+haproxy

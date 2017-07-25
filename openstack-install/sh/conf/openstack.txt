@@ -1,0 +1,5 @@
+glance
+keystone
+neutron-api
+nova-cloud-controller
+cinder

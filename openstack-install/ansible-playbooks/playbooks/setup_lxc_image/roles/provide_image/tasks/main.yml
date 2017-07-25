@@ -1,0 +1,15 @@
+---
+# lxc image copy
+- name: Check directory
+  shell: sudo lxc image list |grep ubuntu |awk '{print $4}' |xargs sudo lxc image info |grep Fingerprint|awk -F{{ ":" }} '{print $2}'|sed -e 's/ //g'
+  register: res
+
+- debug:
+    msg: "{{ res.stdout }}"
+
+- name: Delete original image
+  file: path="/var/lib/lxd/image{{ res.stdout }}.rootfs"
+        state=absent
+
+- name: Copy custom lxc image
+  copy: src=custrom.rootfs.tar.xz dest=/var/lib/lxd/images/{{ res.stdout }}.rootfs mode=0644

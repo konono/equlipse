@@ -1,0 +1,10 @@
+# Purge expired tokens from the keystone database hourly, per OpenStack installation guide.
+{% if token_flush -%}
+{% if use_syslog -%}
+0 * * * * keystone /usr/bin/keystone-manage token_flush 2>&1 | logger -t keystone-token-flush
+{% else -%}
+0 * * * * keystone /usr/bin/keystone-manage token_flush >> /var/log/keystone/keystone-token-flush.log 2>&1
+{% endif -%}
+{% else -%}
+# Current unit is not the leader unit. Token flush will be managed by the leader unit.
+{% endif -%}

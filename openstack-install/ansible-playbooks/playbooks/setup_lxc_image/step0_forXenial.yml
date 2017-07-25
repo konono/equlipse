@@ -1,0 +1,7 @@
+---
+- name: install python2.7 
+  hosts: "{{ target | default('all') }}"
+  become: yes
+  gather_facts: no
+  tasks:
+    - raw: sudo apt-get install -qq python2.7 python-dev python-pip

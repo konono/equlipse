@@ -1,0 +1,2 @@
+../ansible-playbooks/playbooks/setup_lxc_image/step1.yml
+./inventory.sh
