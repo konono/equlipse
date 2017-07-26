@@ -16,12 +16,12 @@
 
 #### 1.1.2 各マシンにホストをつけていく
 
-`.maas-install/sh/hostname-config.sh 44:1e:a1:44:14:8a sv45`
+`./maas-install/sh/hostname-config.sh 44:1e:a1:44:14:8a sv45`
 
 ※もし、Macアドレスを収集するのが大変であれば、iLO用のツールがあります。
 
 ```
-tool/collect-macaddr4ilo.py -u ilouser -p password 172.16.101.45
+./tool/collect-macaddr4ilo.py -u ilouser -p password 172.16.101.45
 Port1NIC_MACAddress=44:1e:a1:44:14:88
 Port2NIC_MACAddress=44:1e:a1:44:14:8a
 Port3NIC_MACAddress=44:1e:a1:44:14:78
