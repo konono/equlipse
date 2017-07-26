@@ -2,7 +2,7 @@
 
 ## 1. Install MAAS
 
-[MAAS install procedure](https://github.com/konono/equlipse/blob/master/maas-install/how-to-install-maas.md 'MAAS install')
+![MAAS install procedure](https://github.com/konono/equlipse/blob/master/maas-install/how-to-install-maas.md 'MAAS install')
 
 ※ MAASのプロファイルはmと言う名前で作ってください。
 
@@ -12,7 +12,7 @@
 
 #### 1.1.1 10.0.10.0/23のセグメントに認識させるマシンを繋いだ状態で、電源をONにすることで、MAASにマシンを登録していく
 
-[MAAS add node docs](https://docs.ubuntu.com/maas/2.1/en/nodes-add 'MAAS add node')
+![MAAS add node docs](https://docs.ubuntu.com/maas/2.1/en/nodes-add 'MAAS add node')
 
 #### 1.1.2 各マシンにホストをつけていく
 
@@ -55,6 +55,6 @@ maas m tag update-nodes [tag名] add=$(maas m nodes read hostname=[host名]|jq -
 
 設定例
 
-[maas_network_config](https://raw.githubusercontent.com/konono/equlipse/images/maas_network_config.PNG 'maas_network_config')
+![maas_network_config](https://raw.githubusercontent.com/konono/equlipse/images/maas_network_config.PNG 'maas_network_config')
 
 
