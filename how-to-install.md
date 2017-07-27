@@ -176,7 +176,7 @@ computeノードをデプロイしていきます。
 
 ### 4.1 vMX Install and configuration
 
-[contrail install procedure and configuration](https://github.com/konono/equlipse/blob/master/vmx-install/how-to-install-vmx.md)
+[vMX install procedure and configuration](https://github.com/konono/equlipse/blob/master/vmx-install/how-to-install-vmx.md)
 
 ### 4.2 contrail relate vMX
 
