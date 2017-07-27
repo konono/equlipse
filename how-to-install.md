@@ -1,5 +1,11 @@
 # How to install openstack
 
+## 事前準備
+
+Local repositoryを構築しておいた方が何かと楽です。
+私たちはaptlyと言うツールを使っており、aptlyの構築手順、Ubuntu OpenStackを構築する際に必要なレポジトリは下記URLにまとめてあります。
+[aptly install procedure](https://github.com/konono/aptly-toolset)
+
 ## 1. Install MAAS
 
 ![MAAS install procedure](https://github.com/konono/equlipse/blob/master/maas-install/how-to-install-maas.md 'MAAS install')
