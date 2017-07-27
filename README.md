@@ -79,7 +79,7 @@
     * In the sample `vlan 250(tag)` `10.0.250.0/24`
   * floating ip segment
     * In the sample `vlan 301` `175.111.74.0/24`
-* Preparing reachability of vlan 10 and vlan 110
+* Preparing reachability of vlan 10 and vlan 20, vlan 110, vlan 120
 
 ## Software requirements
 * OpenStack Mitaka
