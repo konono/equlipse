@@ -1,11 +1,7 @@
 #!/bin/bash
 
-#!/bin/bash
-sed -i "s/^TAG=.*/TAG=$2/g" inventory.sh
-TARGETS=$(./inventory.sh --list|jq .sys.hosts[] -r)
-
-MACHINES=$2
-APPLIST=$1
+MACHINES=$1
+APPLIST=$2
 
 for i in $(echo ${MACHINES})
 do
