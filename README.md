@@ -1,5 +1,5 @@
 # equlipse
- This project aims to deploy OpenStack Mitaka using MAAS / Juju and relate OpenContrail
+ This project aims to deploy OpenStack Mitaka using MAAS / Juju and relate OpenContrail.
 
 ## Hardware requirements
 
@@ -87,7 +87,6 @@
     * In the sample `vlan 250(tag)` `10.0.250.0/24`
   * floating ip segment
     * In the sample `vlan 301` `175.111.74.0/24`
-* Preparing reachability of vlan 10 and vlan 20, vlan 110, vlan 120
 * Preparing reachability among the above vlans.
 
 ## Software requirements
