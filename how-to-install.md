@@ -103,5 +103,72 @@ CephはMAASの画像を添付していませんが、Controller,Computeと同じ
 
 ![juju install procedure](https://github.com/konono/equlipse/blob/master/juju-install/how-to-install-juju.md)
 
+
+
 ## 3. Install OpenStack
+
+※juju commandが使えるサーバ上で実施すること
+
+
+### 3.1 Deploy bundle
+
+`juju deploy ./openstack-install/charm/trusty-mitaka-contrail-ha.yaml`
+
+
+### 3.2 Model-config change
+
+`./openstack-install/sh/01.model-init.sh`
+
+
+### 3.3 Deploy controller baremetal node
+
+この手順ではcontrollerノードのtag(MAASで作成したtag)を指定して、controller nodeのデプロイを実施しています。
+冗長構成を組む場合は、イケてないですけどこの手順を3回繰り返してください。
+
+`./openstack-install/sh/02.add-control.sh control`
+
+
+### 3.4 LXD container configuration
+
+`./openstack-install/sh/03.init-container.sh control`
+
+
+### 3.5 LXD image replace
+
+※ここはaptlyを使っていた場合のバッドナレッジなのでaptlyを使っていない人は飛ばしてください
+
+aptlyを使っていた場合、repositoryに対してアクセスするのにgpgキーが必要になるのだが、配置する機能がjujuにないため、LXDのカスタムイメージを作っている。
+※個人的にはgpgキーを事前にダウンロードしてくるcharmを作ってもいいのではと思ってはいるけど、作ってません、気が向いたら作ります。
+
+LXDのイメージをダウンロードし、keyserverからgpgキーをダウンロードして、`custrom.rootfs.tar.xz`と言う名前で`ansible-playbooks/playbooks/setup_lxc_image/roles/provide_image/files`配下に配置してください。
+
+配置できたら下記コマンドでimageの差し替えが可能です。
+
+`/openstack-install/sh/04.provide-lxc-image.sh control`
+
+
+### 3.6 Install OpenStack contoller to LXD
+
+ControllerノードにOpenStackをデプロイしていきます、冗長構成を取る場合は3台分選択してください。
+
+`./openstack-install/sh/05.add-ctrl-tolxd.sh ./openstack-install/sh/conf/ctrlapplist.txt [controller node id]`
+
+for example ->
+`./openstack-install/sh/05.add-ctrl-tolxd.sh ./openstack-install/sh/conf/ctrlapplist.txt 1`
+
+
+### 3.7 Deploy Ceph-osd
+
+ceph-osdノードをデプロイしていきます。
+このスクリプトで指定されているtagはMAASで登録したtagです。
+
+`./openstack-install/sh/06.add-ceph-osd.sh ceph`
+
+
+### 3.8 Deploy Compute Node
+
+computeノードをデプロイしていきます。
+このスクリプトで指定されているtagはMAASで登録したtagです。
+
+`./openstack-install/sh/07.add-nova-compute.sh compute`
 
