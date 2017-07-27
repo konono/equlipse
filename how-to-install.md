@@ -112,6 +112,38 @@ CephはMAASの画像を添付していませんが、Controller,Computeと同じ
 
 ### 3.1 Deploy bundle
 
+Bundleファイルは要編集です。
+編集しなければならない箇所は以下です。
+
+
+* 冗長されるcomponentの設定(全く同じNW構成であった場合は必要なし)
+
+```
+vip: 10.0.10.11
+vip_cidr: 23
+vip_iface: eth2
+```
+
+* ローカルリポジトリのアドレスと、GPG key
+
+```
+source: "deb http://10.0.10.10/ubuntu trusty-updates-mitaka main" 
+key: "300F9C58"
+```
+
+* Cephノードのfsidとsecret
+
+```
+fsid: 4e8b237a-e754-11e6-8ce0-00163efc80d3 
+monitor-secret: AQAz6I9Y3tWkBRAAKANsnHQyzyADCI7TO91uYw==
+```
+
+* Contrailのvrouterが使うインターフェイス(全く同じNW構成であった場合は必要なし)
+
+```
+vhost-interface: "bond0.110"
+```
+
 `juju deploy ./openstack-install/charm/trusty-mitaka-contrail-ha.yaml`
 
 
