@@ -129,6 +129,9 @@ vip_iface: eth2
 ```
 source: "deb http://10.0.10.10/ubuntu trusty-updates-mitaka main" 
 key: "300F9C58"
+
+※ GPGkeyはkeyがインストールされているノード上で下記コマンドを使うと確認できます。
+gpg --list-keys [your mail address] |grep pub |awk '{print $2}'|egrep -o '/.*'|sed -e 's@/@@g'
 ```
 
 * Cephノードのfsidとsecret
