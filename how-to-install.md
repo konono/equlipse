@@ -9,7 +9,7 @@ Local repositoryを構築しておいた方が何かと楽です。
 
 ## 1. Install MAAS
 
-![MAAS install procedure](https://github.com/konono/equlipse/blob/master/maas-install/how-to-install-maas.md 'MAAS install')
+[MAAS install procedure](https://github.com/konono/equlipse/blob/master/maas-install/how-to-install-maas.md 'MAAS install')
 
 ※ MAASのプロファイルはmと言う名前で作ってください。
 
@@ -17,7 +17,7 @@ Local repositoryを構築しておいた方が何かと楽です。
 
 ### 1.1 10.0.10.0/23のセグメントに認識させるマシンを繋いだ状態で、電源をONにすることで、MAASにマシンを登録していく
 
-![MAAS add node docs](https://docs.ubuntu.com/maas/2.1/en/nodes-add 'MAAS add node')
+[MAAS add node docs](https://docs.ubuntu.com/maas/2.1/en/nodes-add 'MAAS add node')
 
 ### 1.2 各マシンにホストをつけていく
 
@@ -172,3 +172,14 @@ computeノードをデプロイしていきます。
 
 `./openstack-install/sh/07.add-nova-compute.sh compute`
 
+## 4. Contrail intergration
+
+### 4.1 vMX Install and configuration
+
+[contrail install procedure and configuration](https://github.com/konono/equlipse/blob/master/vmx-install/how-to-install-vmx.md)
+
+### 4.2 contrail relate vMX
+
+http://goodbyecli.com/contrail-device-manager/
+
+### Complete!! Happy OpenStack!
