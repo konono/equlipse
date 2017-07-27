@@ -88,6 +88,7 @@
   * floating ip segment
     * In the sample `vlan 301` `175.111.74.0/24`
 * Preparing reachability of vlan 10 and vlan 20, vlan 110, vlan 120
+* Preparing reachability among the above vlans.
 
 ## Software requirements
 * OpenStack Mitaka
@@ -96,7 +97,7 @@
 * vMX 17.2~
 * Contrail package 3.2~
 
-ContrailのパッケージはJuniper社に問い合わせて入手してください。
+### *To get contrail package, Please contact Juniper K.K.*
 
 ## Install procedure
 [OpenStack install procedure](https://github.com/konono/equlipse/blob/master/how-to-install.md)
