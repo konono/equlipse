@@ -15,13 +15,11 @@ Local repositoryを構築しておいた方が何かと楽です。
 
 `maas login m http://[MAAS_server]/MAAS/api/2.0 [apikey]`
 
-### 1.1 Register machines
-
-#### 1.1.1 10.0.10.0/23のセグメントに認識させるマシンを繋いだ状態で、電源をONにすることで、MAASにマシンを登録していく
+### 1.1 10.0.10.0/23のセグメントに認識させるマシンを繋いだ状態で、電源をONにすることで、MAASにマシンを登録していく
 
 ![MAAS add node docs](https://docs.ubuntu.com/maas/2.1/en/nodes-add 'MAAS add node')
 
-#### 1.1.2 各マシンにホストをつけていく
+### 1.2 各マシンにホストをつけていく
 
 `./maas-install/sh/hostname-config.sh 44:1e:a1:44:14:8a sv45`
 
@@ -35,13 +33,13 @@ Port3NIC_MACAddress=44:1e:a1:44:14:78
 Port4NIC_MACAddress=44:1e:a1:44:14:7a
 ```
 
-#### 1.1.3 マシンがnew状態で認識されたら、それぞれ電源管理(IPMI)の設定を投入する
+### 1.3 マシンがnew状態で認識されたら、それぞれ電源管理(IPMI)の設定を投入する
 
 `./maas-install/sh/power-config [Host名] [IP address] [user] [password]`
 
 for example> `./power-config.sh sv45 172.16.101.45 user password`
 
-#### 1.1.4 各ノードに対してtagをつけていく
+### 1.4 各ノードに対してtagをつけていく
 
 必要になるtagは下記のとおりです。
 * bootstrap
@@ -58,13 +56,13 @@ maas m tags create name=[tag名]
 maas m tag update-nodes [tag名] add=$(maas m nodes read hostname=[host名]|jq -r ".[].system_id") 
 ```
 
-#### 1.1.5 MAASにネットワークとサブネットを登録する
+### 1.5 MAASにネットワークとサブネットを登録する
 
 設定例
 
 ![maas_network_config](https://raw.githubusercontent.com/konono/equlipse/images/maas_network_config.PNG 'maas_network_config')
 
-#### 1.1.6 各ノードのNW設定を行う
+### 1.6 各ノードのNW設定を行う
 
 
 
@@ -98,4 +96,12 @@ maas m tag update-nodes [tag名] add=$(maas m nodes read hostname=[host名]|jq -
 
 CephはMAASの画像を添付していませんが、Controller,Computeと同じようにMAASからconfigurationすると楽です。
 ![ceph_nw_config](https://raw.githubusercontent.com/konono/equlipse/images/ceph-nw-config.PNG)
+
+
+
+## 2. Install Juju
+
+![juju install procedure](https://github.com/konono/equlipse/blob/master/juju-install/how-to-install-juju.md)
+
+## 3. Install OpenStack
 
