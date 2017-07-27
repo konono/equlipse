@@ -96,5 +96,6 @@ maas m tag update-nodes [tag名] add=$(maas m nodes read hostname=[host名]|jq -
 
 ### Ceph osd 例
 
+CephはMAASの画像を添付していませんが、Controller,Computeと同じようにMAASからconfigurationすると楽です。
 ![ceph_nw_config](https://raw.githubusercontent.com/konono/equlipse/images/ceph-nw-config.PNG)
 
