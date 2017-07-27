@@ -8,7 +8,7 @@ from optparse import OptionParser
 macs=[]
 err=0
 
-op=OptionParser("fancheck [options] ip")
+op=OptionParser("collect-macaddr4ilo [options] ip")
 op.add_option("-l","--log",action="store_true",dest="log",default=False,help="whole logs to stdout")
 op.add_option("-u","--user",action="store",dest="user",type="string",default=False,help="access user name")
 op.add_option("-p","--password",action="store",dest="password",type="string",default=False,help="access user password")
