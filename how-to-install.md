@@ -57,4 +57,37 @@ maas m tag update-nodes [tag名] add=$(maas m nodes read hostname=[host名]|jq -
 
 ![maas_network_config](https://raw.githubusercontent.com/konono/equlipse/images/maas_network_config.PNG 'maas_network_config')
 
+#### 1.1.6 各ノードのNW設定を行う
+
+
+
+### Juju bootstrap 例
+
+![juju_if_config](https://raw.githubusercontent.com/konono/equlipse/images/juju-if.PNG)
+
+![juju_nw_config](https://raw.githubusercontent.com/konono/equlipse/images/juju-nw-config.PNG)
+
+
+
+### Controller 例
+
+![control_if_config](https://raw.githubusercontent.com/konono/equlipse/images/control-if.PNG)
+※今回ドキュメントにある通りに作るのであれば、cephのservice segmentを食わせる必要があるので、vlan 100ではなくvlan 120をつけてください。
+
+![control_nw_config](https://raw.githubusercontent.com/konono/equlipse/images/control-nw-config.PNG)
+
+
+
+### Compute 例
+
+![compute_if_config](https://raw.githubusercontent.com/konono/equlipse/images/compute-if.PNG)
+※今回ドキュメントにある通りに作るのであれば、vlan 100はいらないです。
+
+![compute_nw_config](https://raw.githubusercontent.com/konono/equlipse/images/compute-nw-config.PNG)
+
+
+
+### Ceph osd 例
+
+![ceph_nw_config](https://raw.githubusercontent.com/konono/equlipse/images/ceph-nw-config.PNG)
 
