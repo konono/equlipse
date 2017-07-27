@@ -10,6 +10,7 @@
   * cpu: 1 core
   * mem: 4GB
   * interface: 1 port
+  * ipmi port
   * disk: 1disk, 50GB
 
 * 1 MAAS node (physical or vm)
@@ -17,6 +18,7 @@
   * cpu: 4 core
   * mem: 16GB
   * interface: 4 port
+  * ipmi port
   * disk: 1disk, 100GB
   
 * 1 Juju node (physical or vm)
@@ -24,6 +26,7 @@
   * cpu: 4 core
   * mem: 16GB
   * interface: 4 port
+  * ipmi port
   * disk: 1disk, 300GB
   
 * 1 Local repository node (physical or vm)
@@ -31,6 +34,7 @@
   * cpu: 4 core
   * mem: 16GB
   * interface: 4 port
+  * ipmi port
   * disk: 1disk, 500GB~
   
 ### OpenStack node group
@@ -40,6 +44,7 @@
   * cpu: 4 core
   * mem: 16GB
   * interface: 4 port
+  * ipmi port
   * disk: 1disk, 100GB
   
 * 1 Compute node (pysical)
@@ -47,6 +52,7 @@
   * cpu: 4 core
   * mem: 16GB
   * interface: 4 port
+  * ipmi port
   * disk: 1disk, 100GB
 
 * 3 Ceph storage node (physical or vm)
@@ -54,6 +60,7 @@
   * cpu: 4 core
   * mem: 16GB
   * interface: 4 port
+  * ipmi port
   * disk: 3disk, 500GB~ (require osd disk sdb and sdc)
 
 ### virtual router node group
@@ -63,6 +70,7 @@
   * cpu: 4 core
   * mem: 16GB
   * interface: 4 port
+  * ipmi port
   * disk: 1disk, 100GB
   
 ## Network requirements
@@ -86,3 +94,9 @@
 * Juju 2.0~
 * MAAS 2.0~
 * vMX 17.2~
+* Contrail package 3.2~
+
+ContrailのパッケージはJuniper社に問い合わせて入手してください。
+
+## Install procedure
+[OpenStack install procedure](https://github.com/konono/equlipse/blob/master/how-to-install.md)
