@@ -1,7 +1,7 @@
 #!/bin/bash
 
-MACHINES=$1
-APPLIST=$2
+APPLIST=$1
+MACHINES=$2
 
 for i in $(echo ${MACHINES})
 do
