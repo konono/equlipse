@@ -49,14 +49,14 @@ credentials added for cloud c1
 
 Jujuをインストールするサーバを明示的に選択するために、タグを付けておく
 ```
-maas m tags create name=juju-bootstrap
-maas m tag update-nodes juju-bootstrap add=$(maas m nodes read hostname=[対象サーバのホスト名]|jq -r ".[].system_id") 
+maas m tags create name=bootstrap
+maas m tag update-nodes bootstrap add=$(maas m nodes read hostname=[対象サーバのホスト名]|jq -r ".[].system_id") 
 ```
 
 ### 5. Juju bootstrap
 
 juju-bootstrapのタグがついているNodeにjuju serverをデプロイ
 ```
-juju bootstrap --constraints tags=juju-bootstrap --debug c1 juju01
+juju bootstrap --constraints tags=bootstrap --debug c1 juju01
 ```
 
