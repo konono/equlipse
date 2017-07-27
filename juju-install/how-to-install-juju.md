@@ -45,6 +45,9 @@ ubuntu@deploy:~$ juju add-credential c1
 credentials added for cloud c1
 ```
 
+APIキーの取得
+![maas_api_key](https://raw.githubusercontent.com/konono/equlipse/images/maas-api-key.PNG)
+
 ### 4. MAAS configuration
 
 Jujuをインストールするサーバを明示的に選択するために、タグを付けておく
