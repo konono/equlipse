@@ -83,8 +83,11 @@ LXDが接続するbridgeインターフェイスは自動で作られるので�
 hostマシンのbr-xxxxのアルファベット順に並ぶ。
 
 eth0 <--> br-bond0.100
+
 eth1 <--> br-bond0.110
+
 eth2 <--> br-enp3s0f0 
+
 eth3 <--> br-enp3s0f1 
 
 LXDのデプロイが問題なく言った場合下記のようにbridgeが作られる。
