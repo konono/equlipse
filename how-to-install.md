@@ -76,6 +76,29 @@ maas m tag update-nodes [tag名] add=$(maas m nodes read hostname=[host名]|jq -
 
 ### Controller 例
 
+LXDが接続するbridgeインターフェイスは自動で作られるので、物理IFの設定のみ施せば良い
+
+#### LXD containerのeth番号について
+
+hostマシンのbr-xxxxのアルファベット順に並ぶ。
+
+eth0 <--> br-bond0.100
+eth1 <--> br-bond0.110
+eth2 <--> br-enp3s0f0 
+eth3 <--> br-enp3s0f1 
+
+LXDのデプロイが問題なく言った場合下記のようにbridgeが作られる。
+
+```
+ubuntu@sv43:~$ brctl show
+bridge name     bridge id               STP enabled     interfaces
+br-bond0.100            8000.a0369f500e18       no              bond0.100
+br-bond0.110            8000.a0369f500e18       no              bond0.110
+br-enp3s0f0             8000.441ea1463d30       no              enp3s0f0
+br-enp3s0f1             8000.441ea1463d32       no              enp3s0f1
+```
+
+
 ![control_if_config](https://raw.githubusercontent.com/konono/equlipse/images/control-if.PNG)
 ※今回ドキュメントにある通りに作るのであれば、cephのservice segmentを食わせる必要があるので、vlan 100ではなくvlan 120をつけてください。
 
