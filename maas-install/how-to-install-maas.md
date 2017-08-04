@@ -63,7 +63,7 @@ ssh-keygen
 mv ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys
 sudo chmod 600 ~/.ssh/authorized_keys
 sudo chmod 600 ~/.ssh/id_rsa
-cat ~/.ssh/authorized_keys |xargs -I% maas m sshkeys new key="%" 
+cat ~/.ssh/authorized_keys |xargs -I% maas m sshkeys create key="%" 
 scp ~/.ssh/id_rsa ubuntu@maas:~/.ssh/
 ```
 
