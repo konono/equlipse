@@ -25,6 +25,8 @@ Again:
 Email: [your mail account]
 Import SSH keys [] (lp:user-id or gh:user-id):
 ```
+#### ここでSSH keyを求められるのだが、ここではlp=launch padもしくはgh=githubの鍵しか食わせられないのでスルーしましょう
+#### エラーが出てもちゃんとユーザーは作られています
 
 ### MAASコマンドのセットアップ
 
@@ -38,6 +40,13 @@ maas login m http://[MAAS_server]/MAAS/api/2.0 [apikey]
 コマンドのテスト
 maas m nodes read
 ```
+
+### GUIからのセットアップ
+最近のMAASはインストールした後最初のアクセスはsetup画面に飛ばされるようになったので、GUIからセットアップします。
+
+![maas-setup1](https://raw.githubusercontent.com/konono/equlipse/images/maas-setup01.PNG 'maas-setup1')
+
+![maas-setup2](https://raw.githubusercontent.com/konono/equlipse/images/maas-setup02.PNG 'maas-setup2')
 
 ### MAASイメージのインポート
 
