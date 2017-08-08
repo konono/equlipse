@@ -71,7 +71,7 @@ scp ~/.ssh/id_rsa ubuntu@maas:~/.ssh/
 
 ```
 maas m ipranges create type=dynamic start_ip=10.0.10.50 end_ip=10.0.10.255
-maas m vlan update fabric-0 untagged dhcp_on=True primary_rack=maas01
+maas m vlan update fabric-0 untagged dhcp_on=True primary_rack=[デフォルトではMAASのhost名]
 
 ※Gatewayが設定されていなければ下記で設定
 maas m subnet update 10.0.10.0/23 gateway_ip=10.0.11.254
@@ -84,7 +84,7 @@ maas m subnet update 10.0.10.0/23 gateway_ip=10.0.11.254
 ```
 maas m nodes read mac_address="44:1e:a1:44:14:88"|jq -r ".[].hostname"|sed -e "s/.maas//g"|xargs -t -I% maas m nodes read hostname=%|jq -r ".[].system_id"|xargs -I% -t  maas m machine update % hostname=sv45
 ```
-### 仮想マシンをMAASに登録
+### 仮想マシンをMAASから電源管理
 
 ```
 kvmの場合KVMのノードに対してvirshコマンドが実行できるようにしておく
