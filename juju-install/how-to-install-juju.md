@@ -9,7 +9,7 @@ clouds:
         c1:
             type: maas
             auth-types: [oauth1]
-            endpoint: http://192.168.150.2/MAAS
+            endpoint: http://192.168.150.2:5240/MAAS
 
 ```
 
