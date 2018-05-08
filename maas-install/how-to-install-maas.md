@@ -10,12 +10,12 @@ sudo apt-get install maas
 sudo apt-get install jq
 ```
 
-### MAASのadmin userセットアップ
+### MAASのuserセットアップ
 
 ```
-sudo maas-region-admin createadmin
+sudo maas-region createadmin
 
-ubuntu@maas-n:~$ sudo maas-region-admin createadmin                                            
+ubuntu@maas-n:~$ sudo maas-region createadmin                                            
 [sudo] password for ubuntu:                                                                    
 WARNING: The maas-region-admin command is deprecated and will be removed in a future version. 
 From now on please use 'maas-region' instead.                                                   
@@ -31,7 +31,7 @@ Import SSH keys [] (lp:user-id or gh:user-id):
 ### MAASコマンドのセットアップ
 
 ```
-sudo maas-region-admin apikey --username=xxxxx | xargs maas login m http://localhost/MAAS/api/2.0
+sudo maas-region apikey --username=xxxxx | xargs maas login m http://localhost/MAAS/api/2.0
 
 ※MAASノード以外でセットアップする時はコマンドを下記
 sudo apt-get install maas-cli
